@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Product;
+namespace App\Http\Requests\Cart;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProductIndexRequest extends FormRequest
+class AddProductToCartRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,8 +14,7 @@ class ProductIndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'price_from' => 'numeric|nullable',
-            'price_to' => 'numeric|nullable'
+            'product_id' => 'required|numeric'
         ];
     }
 }

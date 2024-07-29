@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use Carbon\Carbon;
@@ -29,4 +30,12 @@ Route::prefix('categories')->group(function (){
     Route::get('/{category}', [CategoryController::class, 'show']);
     Route::post('/', [CategoryController::class, 'store']);
     Route::get('/', [CategoryController::class, 'index']);
+});
+
+Route::prefix('cart')->group(function (){
+    Route::get('/', [CartController::class, 'index']);
+    Route::post('/add-product', [CartController::class, 'add']);
+    Route::post('/remove-product', [CartController::class, 'remove']);
+    Route::post('/clear-product', [CartController::class, 'clear']);
+    Route::post('/make-order', [CartController::class, 'order']);
 });

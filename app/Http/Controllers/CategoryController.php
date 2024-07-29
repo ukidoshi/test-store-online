@@ -12,12 +12,12 @@ class CategoryController extends Controller
 
     public function index()
     {
-        return CategoryCollection::make(Category::all())->resolve();
+        return new CategoryCollection(Category::paginate(15));
     }
 
     public function show(Category $category)
     {
-        return CategoryResource::make($category)->resolve();
+        return new CategoryResource($category);
     }
 
     public function store(CategoryStoreRequest $request)
@@ -29,6 +29,6 @@ class CategoryController extends Controller
         }
 
         $category = Category::create($data);
-        return CategoryResource::make($category)->resolve();
+        return new CategoryResource($category);
     }
 }

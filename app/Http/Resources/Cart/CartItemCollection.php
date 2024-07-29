@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Product;
+namespace App\Http\Resources\Cart;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class ProductCollection extends ResourceCollection
+class CartItemCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -16,7 +16,7 @@ class ProductCollection extends ResourceCollection
     {
         return [
             'items' => $this->collection,
-            'total'=> $this->count()
+            'total' => $this->count
         ];
     }
 }

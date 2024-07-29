@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Filters\Product\ProductFilter;
 use App\Http\Requests\Product\ProductIndexRequest;
 use App\Http\Requests\Product\ProductStoreRequest;
 use App\Http\Resources\Product\ProductCollection;
@@ -12,14 +13,15 @@ use App\Models\ProductAttribute;
 
 class ProductController extends Controller
 {
-    public function index(ProductIndexRequest $request)
+    public function index(ProductFilter $filter)
     {
-        return ProductCollection::make(Product::all())->resolve();
+        $products = Product::filter($filter)->paginate(15);
+        return new ProductCollection($products);
     }
 
     public function show(Product $product)
     {
-        return ProductResource::make($product)->resolve();
+        return new ProductResource($product);
     }
 
     public function store(ProductStoreRequest $request)
@@ -34,6 +36,6 @@ class ProductController extends Controller
 
         $product = Product::create($productData);
         $productAttr = ProductAttribute::create($productAttrData + ['product_id' => $product->id]);
-        return ProductResource::make($product)->resolve();
+        return new ProductResource($product);
     }
 }

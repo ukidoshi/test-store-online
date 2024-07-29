@@ -15,8 +15,8 @@ class CategoryCollection extends ResourceCollection
     public function toArray(Request $request): array
     {
         return [
-            'categories' => $this->collection,
-            'categoriesCount'=> $this->count()
+            'items' => $this->collection,
+            'total'=> $this->count()
         ];
     }
 }
