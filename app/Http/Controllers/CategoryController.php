@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Category\CategoryStoreRequest;
-use App\Http\Requests\ProductStoreRequest;
 use App\Http\Resources\Category\CategoryCollection;
 use App\Http\Resources\Category\CategoryResource;
 use App\Models\Category;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -25,6 +23,11 @@ class CategoryController extends Controller
     public function store(CategoryStoreRequest $request)
     {
         $data = $request->validationData();
+
+        if (!Category::isValidDepth($data['parent_id'] ?? null)) {
+            return response()->json(['error' => 'Category level cannot exceed 3'], 400);
+        }
+
         $category = Category::create($data);
         return CategoryResource::make($category)->resolve();
     }

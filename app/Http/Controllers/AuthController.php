@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AuthLoginRequest;
-use App\Http\Requests\AuthRegisterRequest;
+use App\Http\Requests\Auth\AuthLoginRequest;
+use App\Http\Requests\Auth\AuthRegisterRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -19,11 +19,8 @@ class AuthController extends Controller
         $token = $user->createToken('user_token')->plainTextToken;
 
         return response()->json([
-            'status' => 'success',
-            'data' => [
-                'user' => $user,
-                'token' => $token
-            ],
+            'user' => $user,
+            'token' => $token
         ], 201);
     }
 
@@ -41,21 +38,15 @@ class AuthController extends Controller
         $token = $user->createToken($request->post('email'))->plainTextToken;
 
         return response()->json([
-            'status' => 'success',
-            'data' => [
-                'user' => $user,
-                'token' => $token
-            ],
+            'user' => $user,
+            'token' => $token
         ]);
     }
 
     public function user(): JsonResponse
     {
         return response()->json([
-            'status' => 'success',
-            'data' => [
-                'user' => Auth::user()
-            ]
+            'user' => Auth::user()
         ]);
     }
 }
